@@ -1,88 +1,79 @@
 # first task
-# class frange:
-#     def __init__(self, *args):
-#         num_args = len(args)
-#         if num_args == 1:
-#             self.start = 0.0
-#             self.stop = args[0]
-#             self.step = 1.0
-#         elif num_args == 2:
-#             self.start = args[0]
-#             self.stop = args[1]
-#             self.step = 1.0
-#         elif num_args == 3:
-#             self.start = args[0]
-#             self.stop = args[1]
-#             self.step = args[2]
-#         else:
-#             raise ValueError('frange accepts 1 to 3 arguments')
-#
-#     def __iter__(self):
-#         current = self.start
-#         result = []
-#         if self.step > 0 and current < self.stop:
-#             while current < self.stop:
-#                 result.append(current)
-#                 current += self.step
-#         elif self.step < 0 and current > self.stop:
-#             while current > self.stop:
-#                 result.append(current)
-#                 current += self.step
-#         return iter(result)
-#
-# tests = [
-#     (list(frange(5)), [0.0, 1.0, 2.0, 3.0, 4.0]),
-#     (list(frange(2, 5)), [2.0, 3.0, 4.0]),
-#     (list(frange(2, 10, 2)), [2.0, 4.0, 6.0, 8.0]),
-#     (list(frange(10, 2, -2)), [10.0, 8.0, 6.0, 4.0]),
-#     (list(frange(2, 5.5, 1.5)), [2.0, 3.5, 5.0]),
-#     (list(frange(1, 5)), [1.0, 2.0, 3.0, 4.0]),
-#     (list(frange(0, 5)), [0.0, 1.0, 2.0, 3.0, 4.0]),
-#     (list(frange(0, 0)), []),
-#     (list(frange(100, 0)), [])
-# ]
-#
-# for i, (result, expected) in enumerate(tests):
-#     try:
-#         assert result == expected
-#         print(f'Test {i + 1}: PASSED')
-#     except AssertionError:
-#         print(f'Test {i + 1}: FAILED')
-#
-# print('All tests completed!')
+class frange:
+    def __init__(self, *args):
+        if len(args) == 1:
+            self.start = 0.0
+            self.stop = args[0]
+            self.step = 1.0
+        elif len(args) == 2:
+            self.start = args[0]
+            self.stop = args[1]
+            self.step = 1.0
+        elif len(args) == 3:
+            self.start = args[0]
+            self.stop = args[1]
+            self.step = args[2]
+        else:
+            raise ValueError('frange() accepts 1 to 3 arguments')
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if (self.step > 0 and self.start >= self.stop) or (self.step < 0 and self.start <= self.stop):
+            raise StopIteration
+        current = self.start
+        self.start += self.step
+        return current
+
+
+for i in frange(1, 100, 3.5):
+    print(i)
+
+assert(list(frange(5)) == [0, 1, 2, 3, 4])
+assert(list(frange(2, 5)) == [2, 3, 4])
+assert(list(frange(2, 10, 2)) == [2, 4, 6, 8])
+assert(list(frange(10, 2, -2)) == [10, 8, 6, 4])
+assert(list(frange(2, 5.5, 1.5)) == [2, 3.5, 5])
+assert(list(frange(1, 5)) == [1, 2, 3, 4])
+assert(list(frange(0, 5)) == [0, 1, 2, 3, 4])
+assert(list(frange(0, 0)) == [])
+assert(list(frange(100, 0)) == [])
+
+print('SUCCESS!')
 
 # second task
-# class Colorizer:
-#     color_codes = {
-#         'red': '\033[91m',
-#         'green': '\033[92m',
-#         'yellow': '\033[93m',
-#         'blue': '\033[94m',
-#         'purple': '\033[95m',
-#         'cyan': '\033[96m',
-#         'white': '\033[97m',
-#     }
-#
-#     reset_code = '\033[0m'
-#
-#     def __init__(self, color):
-#         self.color = color
-#
-#     def __enter__(self):
-#         if self.color in self.color_codes:
-#             print(self.color_codes[self.color], end='')
-#
-#     def __exit__(self, exc_type, exc_value, traceback):
-#         print(self.reset_code, end='')
-#
-# print('aaa')
-# print('bbb')
-# print('ccc')
-#
-# with Colorizer('yellow'):
-#     print('printed in yellow')
-#
-# print('printed in default color')
+class Colorizer:
+    color_codes = {
+        'red': '\033[91m',
+        'green': '\033[92m',
+        'yellow': '\033[93m',
+        'blue': '\033[94m',
+        'purple': '\033[95m',
+        'cyan': '\033[96m',
+        'white': '\033[97m',
+    }
+
+    reset_code = '\033[0m'
+
+    def __init__(self, color):
+        self.color = color
+
+    def __enter__(self):
+        if self.color in self.color_codes:
+            print(self.color_codes[self.color], end='')
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        print(self.reset_code, end='')
+
+print('aaa')
+print('bbb')
+print('ccc')
+
+with Colorizer('yellow'):
+    print('printed in yellow')
+
+print('printed in default color')
 # third task
 import math
 
