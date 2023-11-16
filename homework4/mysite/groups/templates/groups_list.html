@@ -1,0 +1,13 @@
+<html>
+<head>
+    <title>Список груп</title>
+</head>
+<body>
+    <h1>Список груп</h1>
+    <ul>
+        {% for group in groups %}
+            <li>{{ group.name }} - {{ group.description }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
