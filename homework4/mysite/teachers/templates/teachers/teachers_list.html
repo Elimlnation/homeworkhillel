@@ -1,0 +1,13 @@
+<html>
+<head>
+    <title>Список вчителів</title>
+</head>
+<body>
+    <h1>Список вчителів</h1>
+    <ul>
+        {% for teacher in teachers %}
+            <li>{{ teacher.first_name }} {{ teacher.last_name }} - {{ teacher.subject }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
